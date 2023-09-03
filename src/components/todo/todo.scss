@@ -1,47 +1,57 @@
-
 .ToDo {
-    font-family: Arial, sans-serif;
-  
-    header {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-  
-    form {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .content-container {
+    display: flex;
+    flex: 1;
+  }
+
+  .form-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-right: 20px;
+
+    .form {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      margin-bottom: 20px;
-  
+
       h2 {
         margin: 10px 0;
       }
-  
+
       label {
         display: flex;
         flex-direction: column;
-        margin-bottom: 10px;
-  
+        margin-bottom: 15px;
+
         span {
           font-weight: bold;
           margin-bottom: 5px;
         }
-  
+
         input[type="text"],
         input[type="range"] {
           width: 100%;
-          padding: 5px;
+          padding: 8px;
           border: 1px solid #ccc;
           border-radius: 5px;
         }
-  
+
         button[type="submit"] {
-          padding: 5px 10px;
-          background-color:rgb(0, 89, 255);
+          padding: 10px;
+          background-color: rgb(0, 89, 255);
           color: white;
           border: none;
           border-radius: 5px;
@@ -49,28 +59,42 @@
         }
       }
     }
-  
-    // Style individual todo items
+  }
+
+  .results-container {
+    flex: 2;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+
     .todo-item {
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin: 10px 0;
-      border-radius: 5px;
-  
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      background-color: white;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+
       p {
         margin: 5px 0;
       }
-  
+
       div {
         cursor: pointer;
         color: blue;
+        display: inline-block;
+        margin-top: 5px;
       }
-  
+
       hr {
-        margin-top: 10px;
+        margin: 15px 0;
         border: none;
         border-top: 1px solid #ccc;
       }
+
+      &.completed {
+        background-color: #eaf8ea;
+      }
     }
   }
-  
+}

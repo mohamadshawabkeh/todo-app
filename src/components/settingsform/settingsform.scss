@@ -1,0 +1,81 @@
+/* settingsform.scss */
+.settings-form-container {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  width: 100%;
+
+  .settings-header {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    flex: 1;
+  }
+
+  .settings-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .settings-label {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+
+      span {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .settings-input {
+        width: 25%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .settings-button {
+        padding: 10px;
+        background-color: rgb(0, 89, 255);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .list-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    .Card {
+      width: 100%;
+      padding: 10px;
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      .Grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+
+        .Col {
+          display: flex;
+          flex-direction: column;
+
+          .Text {
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

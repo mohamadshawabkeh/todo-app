@@ -1,11 +1,22 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import ToDo from './components/todo/todo';
-import SettingsProvider from './context/settings/index';
+import SettingsForm from './components/settingsform/settingsform';
+import Header from './components/header/header';
+import SettingsProvider from './context/settings/index'; 
 
-export default function App() {
+function App() {
   return (
-    <SettingsProvider>
-      <ToDo />
+    <SettingsProvider> 
+      <div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<ToDo />} />
+          <Route path="/settings" element={<SettingsForm />} />
+        </Routes>
+      </div>
     </SettingsProvider>
   );
 }
+
+export default App;

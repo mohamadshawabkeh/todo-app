@@ -1,0 +1,31 @@
+/* list.scss */
+.Card {
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Add your preferred font here */
+  
+    h2 {
+      margin-bottom: 10px;
+    }
+  
+    .Grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+  
+      .Col {
+        display: flex;
+        flex-direction: column;
+  
+        .Text {
+          font-size: 18px;
+          margin-bottom: 10px;
+  
+          span {
+            font-weight: bold;
+            color: rgb(0, 89, 255);
+          }
+        }
+      }
+    }
+  }
+  
