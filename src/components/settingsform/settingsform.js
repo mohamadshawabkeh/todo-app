@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSettings } from '../../context/settings/index';
 import List from '../settingList/list';
 import './settingsform.scss';
+import Header from '../header/header';
 
 function SettingsForm() {
   const { settings, updateSettings } = useSettings();
@@ -20,6 +21,8 @@ function SettingsForm() {
   };
 
   return (
+    <>
+  <Header/>
     <div className="settings-form-container">
       <div className="settings-header">
         <h1 className="settings-title">⚙️ Manage Settings</h1>
@@ -58,6 +61,7 @@ function SettingsForm() {
 
       <List searchKeyword={searchKeyword} />
     </div>
+    </>
   );
 }
 

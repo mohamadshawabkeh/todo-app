@@ -4,18 +4,24 @@ import ToDo from './components/todo/todo';
 import SettingsForm from './components/settingsform/settingsform';
 import Header from './components/header/header';
 import SettingsProvider from './context/settings/index'; 
+import Login from './components/auth/login';
+import LoginProvider from './context/auth/context';
+
 
 function App() {
   return (
+    <LoginProvider>
     <SettingsProvider> 
       <div>
-        <Header />
+        {/* <Header /> */}
+         
         <Routes>
-          <Route path="/" element={<ToDo />} />
+          <Route path="/" element={<Login/>} />
           <Route path="/settings" element={<SettingsForm />} />
         </Routes>
       </div>
     </SettingsProvider>
+    </LoginProvider>
   );
 }
 
