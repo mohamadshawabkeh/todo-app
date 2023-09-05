@@ -23,9 +23,15 @@ function SettingsForm() {
   return (
     <>
   <Header/>
+  <div className="settings-form-container-main">
+      <div className="settings-Main">
+        <h1 className="settings-Main">⚙️ Manage Settings</h1>
+      </div>
+</div>
+
     <div className="settings-form-container">
       <div className="settings-header">
-        <h1 className="settings-title">⚙️ Manage Settings</h1>
+        {/* <h1 className="settings-title">⚙️ Manage Settings</h1> */}
       </div>
 
       <div className="settings-content">

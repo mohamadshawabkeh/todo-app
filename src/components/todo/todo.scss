@@ -56,6 +56,11 @@
           border: none;
           border-radius: 5px;
           cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #0059ff;
+          }
         }
       }
     }
@@ -84,6 +89,11 @@
         color: blue;
         display: inline-block;
         margin-top: 5px;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #0077ff;
+        }
       }
 
       hr {
@@ -95,6 +105,63 @@
       &.completed {
         background-color: #eaf8ea;
       }
+
+      .edit-form {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        input[type="text"],
+        input[type="range"] {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          margin-bottom: 10px;
+        }
+
+        .auth-button {
+          display: inline-block;
+          padding: 5px 10px;
+          margin-right: 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          font-family: Arial, sans-serif; /* Set font here */
+          font-size: 14px; /* Set font size here */
+          border: 1px solid transparent; /* Remove default button border */
+          margin-bottom: 0; /* Remove any vertical margin */
+
+          &:hover {
+            filter: brightness(1.2);
+          }
+        }
+
+        .update-button {
+          background-color: orange;
+          color: white;
+
+          &:hover {
+            background-color: darkorange;
+          }
+        }
+
+        .delete-button {
+          background-color: red;
+          color: white;
+
+          &:hover {
+            background-color: darkred;
+          }
+        }
+      }
     }
   }
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }

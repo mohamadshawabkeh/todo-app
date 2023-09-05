@@ -10,8 +10,9 @@ class Auth extends React.Component {
   render() {
 
     const isLoggedIn = this.context.loggedIn;
-    const canDo = this.props.capability ? this.context.can(this.props.capability) : true;
+    const canDo = this.props.capabilities ? this.context.can(this.props.capabilities) : true;
     const okToRender = isLoggedIn && canDo;
+    console.log('ssssssssssssssss',this.props)
 
     return (
       <When condition={okToRender}>

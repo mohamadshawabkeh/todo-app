@@ -3,7 +3,7 @@ import cookie from 'react-cookies';
 import jwt_decode from 'jwt-decode';
 
 const testUsers = {
-  Admininistrator: {
+  Administrator: {
     password: 'admin',
     name: 'Administrator',
     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW5pc3RyYXRvciIsInJvbGUiOiJhZG1pbiIsImNhcGFiaWxpdGllcyI6IlsnY3JlYXRlJywncmVhZCcsJ3VwZGF0ZScsJ2RlbGV0ZSddIiwiaWF0IjoxNTE2MjM5MDIyfQ.pAZXAlTmC8fPELk2xHEaP1mUhR8egg9TH5rCyqZhZkQ'

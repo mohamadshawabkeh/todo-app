@@ -17,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { LoginContext } from '../../context/auth/context';
 import { When } from 'react-if';
 import ToDo from '../todo/todo';
+import "./login.scss"
 
 class Login extends React.Component {
   static contextType = LoginContext;
@@ -113,7 +114,7 @@ class Login extends React.Component {
               }}
             >
               <When condition={this.context.loggedIn}>
-                <span >Welcome, {this.context.user.name}</span>
+              <span class="welcome-text">Welcome, {this.context.user.name}</span>
                 <button onClick={this.context.logout}>Log Out</button>
               </When>
 

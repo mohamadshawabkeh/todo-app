@@ -10,18 +10,18 @@ import LoginProvider from './context/auth/context';
 
 function App() {
   return (
+    <>
     <LoginProvider>
     <SettingsProvider> 
-      <div>
         {/* <Header /> */}
          
         <Routes>
           <Route path="/" element={<Login/>} />
           <Route path="/settings" element={<SettingsForm />} />
         </Routes>
-      </div>
     </SettingsProvider>
     </LoginProvider>
+    </>
   );
 }
 

@@ -1,13 +1,28 @@
 /* settingsform.scss */
+.settings-form-container-main {
+  display: flex; /* Display both containers in a row */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+}
+
 .settings-form-container {
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  width: 100%;
+  width: 25%;
 
   .settings-header {
     padding: 20px;
-    background-color: #333;
     color: white;
     text-align: center;
     flex: 1;
