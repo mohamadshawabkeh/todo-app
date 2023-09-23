@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -13,32 +13,47 @@ import {
   TextField,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
 import { LoginContext } from '../../context/auth/context';
 import { When } from 'react-if';
 import ToDo from '../todo/todo';
-import "./login.scss"
+import './login.scss';
 
-class Login extends React.Component {
-  static contextType = LoginContext;
 
-  constructor(props) {
-    super(props);
-    this.state = { username: '', password: '' };
+function Login() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { loggedIn, user, login, logout } = useContext(LoginContext);
+
+  function handleChange(e) {
+    if (e.target.name === 'username') {
+      setUsername(e.target.value);
+    } else if (e.target.name === 'password') {
+      setPassword(e.target.value);
+    }
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    this.context.login(this.state.username, this.state.password);
-  };
+    
+    // Check if both username and password are filled
+    if (username && password) {
+      login(username, password);
+    } else {
+      // Display an error message or prevent form submission
+      console.error('Username and password are required');
+    }
+  }
+  
 
-  render() {
-    return (
-      <>
+  function handleSignUpClick() {
+    navigate('/signup');
+  }
+  // function handleGet() {
+  //   navigate('/api/tasks/v');
+  // }
+  return (
+    <>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -48,14 +63,12 @@ class Login extends React.Component {
                 aria-label="open mobile menu"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                // onClick={/* Add an onClick handler to open the mobile menu */}
                 color="inherit"
               >
                 <MenuIcon />
               </IconButton>
               <Menu
                 id="menu-appbar"
-                // anchorEl={/* Add anchorEl for the mobile menu */}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'left',
@@ -65,8 +78,6 @@ class Login extends React.Component {
                   vertical: 'top',
                   horizontal: 'left',
                 }}
-                // open={/* Add a condition to handle mobile menu open/close */}
-                // onClose={/* Add an onClose handler for the mobile menu */}
               >
                 <MenuItem component={Link} to="/">
                   Home
@@ -113,20 +124,19 @@ class Login extends React.Component {
                 padding: '4px',
               }}
             >
-              <When condition={this.context.loggedIn}>
-              <span class="welcome-text">Welcome, {this.context.user.name}</span>
-                <button onClick={this.context.logout}>Log Out</button>
+              <When condition={loggedIn}>
+                {/* <span className="welcome-text">Welcome, {user.name}</span> */}
+                <button onClick={logout}>Log Out</button>
               </When>
 
-              <When condition={!this.context.loggedIn}>
-                
-                <form onSubmit={this.handleSubmit}>
+              <When condition={!loggedIn}>
+                <form onSubmit={handleSubmit}>
                   <TextField
                     label="Username"
                     variant="outlined"
                     size="small"
                     name="username"
-                    onChange={this.handleChange}
+                    onChange={handleChange}
                   />
                   <TextField
                     label="Password"
@@ -134,23 +144,21 @@ class Login extends React.Component {
                     variant="outlined"
                     size="small"
                     name="password"
-                    onChange={this.handleChange}
+                    onChange={handleChange}
                   />
-                  <button>Login</button>
+                  <button  >Login</button>
+                  <button onClick={handleSignUpClick}>Sign Up</button>
                 </form>
               </When>
-              
             </Box>
           </Toolbar>
         </Container>
-       
       </AppBar>
-      <When condition={this.context.loggedIn}>
-               <ToDo/>
-              </When>
-      </>
-    );
-  }
+      <When condition={loggedIn}>
+        <ToDo />
+      </When>
+    </>
+  );
 }
 
 export default Login;

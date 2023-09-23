@@ -1,7 +1,7 @@
 
 # To Do List 
 
-![UMLDiagram](./Untitled%20(1).jpg)
+![UMLDiagram](./Photos/lab31/Untitled%20(1).jpg)
 
 ### Context API Integration and Settings
 
@@ -36,8 +36,8 @@ run "npm start" to start the application
 
 ### Photos
 
-![photo](./lab30.jpg)
-![photo](./lab302.jpg)
-![photo](./lab303.jpg)
-![photo](./lab304.jpg)
+![photo](./Photos/lab31/lab30.jpg)
+![photo](./Photos/lab31/lab302.jpg)
+![photo](./Photos/lab31/lab303.jpg)
+![photo](./Photos/lab31/lab304.jpg)
 

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 const useForm = (callback, defaultValues = {}) => {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState(defaultValues);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    callback(values);
+    callback(values); 
   };
 
   const handleChange = (event) => {
@@ -16,7 +16,7 @@ const useForm = (callback, defaultValues = {}) => {
       value = parseInt(value);
     }
 
-    setValues((values) => ({ ...values, [name]: value }));
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
   useEffect(() => {

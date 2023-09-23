@@ -1,99 +1,85 @@
-import React from 'react';
-import cookie from 'react-cookies';
-import jwt_decode from 'jwt-decode';
+import superagent from 'superagent';
+import base64 from 'base-64';
+import jwt_decode from 'jwt-decode'; 
 
-const testUsers = {
-  Administrator: {
-    password: 'admin',
-    name: 'Administrator',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW5pc3RyYXRvciIsInJvbGUiOiJhZG1pbiIsImNhcGFiaWxpdGllcyI6IlsnY3JlYXRlJywncmVhZCcsJ3VwZGF0ZScsJ2RlbGV0ZSddIiwiaWF0IjoxNTE2MjM5MDIyfQ.pAZXAlTmC8fPELk2xHEaP1mUhR8egg9TH5rCyqZhZkQ'
-  },
-  Editor: {
-    password: 'editor',
-    name: 'Editor',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRWRpdG9yIiwicm9sZSI6ImVkaXRvciIsImNhcGFiaWxpdGllcyI6IlsncmVhZCcsJ3VwZGF0ZSddIiwiaWF0IjoxNTE2MjM5MDIyfQ.3aDn3e2pf_J_1rZig8wj9RiT47Ae2Lw-AM-Nw4Tmy_s'
-  },
-  Writer: {
-    password: 'writer',
-    name: 'Writer',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiV3JpdGVyIiwicm9sZSI6IndyaXRlciIsImNhcGFiaWxpdGllcyI6IlsnY3JlYXRlJ10iLCJpYXQiOjE1MTYyMzkwMjJ9.dmKh8m18mgQCCJp2xoh73HSOWprdwID32hZsXogLZ68'
-  },
-  User: {
-    password: 'user',
-    name: 'User',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVXNlciIsInJvbGUiOiJ1c2VyIiwiY2FwYWJpbGl0aWVzIjoiWydyZWFkJ10iLCJpYXQiOjE1MTYyMzkwMjJ9.WXYvIKLdPz_Mm0XDYSOJo298ftuBqqjTzbRvCpxa9Go'
-  },
-};
-
+import React, { useEffect, useState } from 'react';
 export const LoginContext = React.createContext();
+import cookie from 'react-cookies';
 
-class LoginProvider extends React.Component {
+const API = `https://todo-api-l31x.onrender.com`;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false,
-      can: this.can,
-      login: this.login,
-      logout: this.logout,
-      user: { capabilities: [] },
-      error: null,
-    };
-  }
+export default function LoginProvider(props) {
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [user, setUser] = useState({});
 
-  can = (capability) => {
-    return this?.state?.user?.capabilities?.includes(capability);
-  }
-
-  login = async (username, password) => {
-    let { loggedIn, token, user } = this.state;
-    let auth = testUsers[username];
-
-    if (auth && auth.password === password) {
-      try {
-        this.validateToken(auth.token);
-      } catch (e) {
-        this.setLoginState(loggedIn, token, user, e);
-        console.error(e);
-      }
+  const loginFunction = async (username, password) => {
+    if (!username || !password) {
+      console.error('Username and password are required');
+      return;
     }
-  }
-
-  logout = () => {
-    this.setLoginState(false, null, {});
-  };
-
-  validateToken = token => {
+  
     try {
-      let validUser = jwt_decode(token);
-      this.setLoginState(true, token, validUser);
+      const response = await superagent
+        .post(`${API}/signin`)
+        .set('authorization', `Basic ${base64.encode(`${username}:${password}`)}`);
+  
+      validateMyUser(response.body);
+    } catch (err) {
+      console.error('Error during login:', err);
     }
-    catch (e) {
-      this.setLoginState(false, null, {}, e);
-      console.log('Token Validation Error', e);
-    }
+  };
+  
+
+  const logoutFunction = () => {
+    setLoginStatus(false);
+    setUser({});
+    cookie.remove('token');
+    cookie.remove('username');
+    cookie.remove('capabilities');
+    window.location.reload();
 
   };
 
-  setLoginState = (loggedIn, token, user, error) => {
-    cookie.save('auth', token);
-    this.setState({ token, loggedIn, user, error: error || null });
+  const validateMyUser = (userData) => {
+    if (userData.user.token) {
+      const userFromToken = jwt_decode(userData.user.token);
+      setLoginStatus(true);
+      setUser(userFromToken);
+  
+      cookie.save('username', userFromToken.username);
+      cookie.save('capabilities', userData.user.capabilities);
+      cookie.save('token', userData.user.token);
+    } else {
+      setLoginStatus(false);
+      setUser({});
+    }
+  };
+  
+
+  useEffect(() => {
+    const myToken = cookie.load('token');
+    if (myToken) {
+      setLoginStatus(true);
+    } else {
+      setLoginStatus(false);
+    }
+  }, []);
+
+  const can = (action) => {
+    return user?.capabilities?.includes(action);
   };
 
-  componentDidMount() {
-    const qs = new URLSearchParams(window.location.search);
-    const cookieToken = cookie.load('auth');
-    const token = qs.get('token') || cookieToken || null;
-    this.validateToken(token);
-  }
+  const state = {
+    loggedIn: loginStatus,
+    user: user,
+    login: loginFunction,
+    logout: logoutFunction,
+    can: can,
+  };
 
-  render() {
-    return (
-      <LoginContext.Provider value={this.state}>
-        {this.props.children}
-      </LoginContext.Provider>
-    );
-  }
+  return (
+    <LoginContext.Provider value={state}>
+      {props.children}
+    </LoginContext.Provider>
+  );
 }
-
-export default LoginProvider;

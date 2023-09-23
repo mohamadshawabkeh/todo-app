@@ -65,7 +65,24 @@
       }
     }
   }
-
+  .complete-button {
+    padding: 5px 10px;
+    background-color: transparent; 
+    color: rgb(255, 0, 0); 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border: 1px solid transparent;
+    margin-bottom: 0;
+  
+    &:hover {
+      background-color: #8c8f93; 
+    }
+  }
+  
   .results-container {
     flex: 2;
     padding: 20px;

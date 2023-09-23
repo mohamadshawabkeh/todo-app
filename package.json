@@ -30,6 +30,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.66.1",
     "styled-components": "^5.3.11",
+    "superagent": "^8.1.2",
     "uuid": "^9.0.0"
   },
   "browserslist": {
