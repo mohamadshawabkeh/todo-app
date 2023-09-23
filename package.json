@@ -19,6 +19,7 @@
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
     "@mui/styled-engine-sc": "^5.14.7",
+    "base-64": "^1.0.0",
     "install": "^0.13.0",
     "jwt-decode": "^3.1.2",
     "npm": "^9.8.1",
