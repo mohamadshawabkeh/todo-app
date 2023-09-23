@@ -28,7 +28,7 @@ const ToDo = () => {
   });
 
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
-  const { settings } = useSettings(); // Get settings from the context
+  const { settings } = useSettings();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -37,7 +37,6 @@ const ToDo = () => {
   const endIndex = startIndex + itemsPerPage;
 
   useEffect(() => {
-    // Function to load the to-do list from the API
     const loadTodoList = async () => {
       try {
         const todoList = await fetchTodoList();
@@ -53,24 +52,20 @@ const ToDo = () => {
   }, []);
 
   function addItem(item) {
-    // Optimistically update the UI
     item.id = uuid();
     item.complete = false;
     const updatedList = [...list, item];
     setList(updatedList);
     setIncomplete((prevIncomplete) => prevIncomplete + 1);
 
-    // Function to add a new to-do item to the API
     const addNewItem = async () => {
       try {
         const newItem = await addTodoItem(item);
         window.location.reload();
       } catch (error) {
-        // If there's an error, revert the UI back to its previous state
         setList((prevList) => prevList.filter((todo) => todo.id !== item.id));
         setIncomplete((prevIncomplete) => prevIncomplete - 1);
         console.error('Error adding to-do item:', error);
-        // You can display an error message to the user here
       }
     };
 
@@ -85,7 +80,6 @@ const ToDo = () => {
       return item;
     });
 
-    // Function to update an existing to-do item in the API
     const updateItem = async () => {
       try {
         await updateTodoItem(id, updatedList.find((item) => item.id === id));
@@ -112,7 +106,33 @@ const ToDo = () => {
     }
   };
 
-  // Filter the items based on the "Hide Completed" setting
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    try {
+      const updatedItem = {
+        id: editingItemId,
+        text: editFormData.text,
+        assignee: editFormData.assignee,
+        difficulty: editFormData.difficulty,
+      };
+      const updatedList = list.map((item) => {
+        if (item.id === editingItemId) {
+          return updatedItem;
+        }
+        return item;
+      });
+
+      setList(updatedList);
+      setEditingItemId(null);
+      await updateTodoItem(editingItemId, updatedItem);
+
+      setList(updatedTodoList);
+    } catch (error) {
+      console.error('Error updating to-do item:', error);
+    }
+  };
+
   const filteredItemsToDisplay = settings.hideCompleted
     ? list.filter((item) => !item.complete)
     : list;
@@ -234,7 +254,6 @@ const ToDo = () => {
                       >
                         {item.complete ? 'Mark as Incomplete' : 'Mark as Complete'}
                       </button>
-
                     </div>
                   )}
                   <hr />
