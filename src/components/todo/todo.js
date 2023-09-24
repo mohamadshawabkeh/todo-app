@@ -32,9 +32,11 @@ const ToDo = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 2;
+  
+  const itemsPerPage = settings.displayCount; // Use displayCount from settings
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
 
   useEffect(() => {
     const loadTodoList = async () => {
